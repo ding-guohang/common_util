@@ -17,24 +17,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <qunar.common.version>8.2.11</qunar.common.version>
         <guava.version>19.0</guava.version>
+        <org.slf4j.version>1.7.21</org.slf4j.version>
+        <org.codehaus.jackson.version>1.9.13</org.codehaus.jackson.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!--<dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>19.0</version>
-            </dependency>-->
-        </dependencies>
-    </dependencyManagement>
-
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <artifactId>junit-dep</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -43,6 +35,18 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>qunar.common</groupId>
+            <artifactId>common-api</artifactId>
         </dependency>
     </dependencies>
 </project>
