@@ -12,9 +12,12 @@ import qunar.api.json.MapperBuilder;
  * To log as json
  * To log after enable
  * To log performance
+ * <p>
+ * if error in using this util, may lose exception stack
  *
  * @author guohang.ding on 16-10-2
  */
+@SuppressWarnings("unused")
 public class LogUtil {
 
     private static final Logger NORMAL_LOGGER = LoggerFactory.getLogger(LogUtil.class);
@@ -28,7 +31,43 @@ public class LogUtil {
     }
 
     /**
+     * log trace
+     * ---isTraceEnabled
+     * ---serialize params
+     *
+     * @param logger   real logger
+     * @param template string template, normal is empty
+     * @param params   params, can be empty
+     */
+    public static void trace(Logger logger, String template, Object... params) {
+        build(logger);
+        if (!getLogger().isTraceEnabled()) {
+            return;
+        }
+        log(LogLevel.Trace, template, serialize(params));
+    }
+
+    /**
+     * log debug
+     * ---isDebugEnabled
+     * ---serialize params
+     *
+     * @param logger   real logger
+     * @param template string template, normal is empty
+     * @param params   params, can be empty
+     */
+    public static void debug(Logger logger, String template, Object... params) {
+        build(logger);
+        if (!getLogger().isDebugEnabled()) {
+            return;
+        }
+        log(LogLevel.Debug, template, serialize(params));
+    }
+
+    /**
      * log info
+     * ---isInfoEnabled
+     * ---serialize params
      *
      * @param logger   real logger
      * @param template string template, normal is empty
@@ -39,18 +78,93 @@ public class LogUtil {
         if (!getLogger().isInfoEnabled()) {
             return;
         }
-        info(template, params);
+        log(LogLevel.Info, template, serialize(params));
     }
 
-    private static void info(String template, Object... params) {
-        logger.info(template, params);
+    /**
+     * log warn
+     * ---warnEnabled
+     * ---serialize params
+     *
+     * @param logger   real logger
+     * @param template string template, normal is empty
+     * @param params   params, can be empty
+     */
+    public static void warn(Logger logger, String template, Object... params) {
+        build(logger);
+        if (!getLogger().isWarnEnabled()) {
+            return;
+        }
+        log(LogLevel.Warn, template, serialize(params));
     }
 
-    private static String seriliaze(Object param) {
+    /**
+     * log error
+     * ---errorEnabled
+     * ---serialize params
+     *
+     * @param logger   real logger
+     * @param template string template, normal is empty
+     * @param params   params, the last is throwable
+     */
+    public static void error(Logger logger, String template, Object... params) {
+        build(logger);
+        if (!getLogger().isErrorEnabled()) {
+            return;
+        }
+        log(LogLevel.Error, template, serialize(params));
+    }
+
+    private static Object[] serialize(Object... params) {
+        if (params != null && params.length > 0) {
+            Object[] trimmed = new Object[params.length];
+            for (int i = 0; i < params.length; i++) {
+                trimmed[i] = params[i] instanceof Throwable ? params[i] : serialize(params[i]);
+            }
+            return trimmed;
+        }
+        return null;
+    }
+
+    private static String serialize(Object param) {
         return MAPPER.writeValueAsString(param);
+    }
+
+    /**
+     * choose log method by level
+     */
+    private static void log(LogLevel level, String template, Object... params) {
+        switch (level) {
+            case Trace:
+                logger.trace(template, params);
+                break;
+            case Debug:
+                logger.debug(template, params);
+                break;
+            case Info:
+                logger.info(template, params);
+                break;
+            case Warn:
+                logger.warn(template, params);
+                break;
+            case Error:
+                logger.error(template, params);
+                break;
+            default:
+                logger.info(template, params);
+                break;
+        }
     }
 
     public static Logger getLogger() {
         return logger;
+    }
+
+    private enum LogLevel {
+        Trace,
+        Debug,
+        Info,
+        Warn,
+        Error
     }
 }
