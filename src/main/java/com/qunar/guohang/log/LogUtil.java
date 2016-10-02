@@ -26,7 +26,7 @@ public class LogUtil {
     /** 这个具体是什么属性还需要确认一下，目前直接使用的泽哥的配置 */
     private static final JsonMapper MAPPER = MapperBuilder.create().enable(JsonFeature.INCLUSION_NOT_NULL).build();
 
-    public static void build(Logger logger) {
+    private static void build(Logger logger) {
         LogUtil.logger = logger == null ? NORMAL_LOGGER : logger;
     }
 
