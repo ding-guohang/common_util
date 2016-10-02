@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author guohang.ding on 16-10-2
  */
+@SuppressWarnings("unused")
 public class LogService {
 
     private static final Logger NORMAL_LOGGER = LoggerFactory.getLogger(LogService.class);
