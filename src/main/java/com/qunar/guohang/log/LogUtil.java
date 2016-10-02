@@ -22,12 +22,11 @@ public class LogUtil {
 
     private static final Logger NORMAL_LOGGER = LoggerFactory.getLogger(LogUtil.class);
 
-    private static Logger logger;
     /** 这个具体是什么属性还需要确认一下，目前直接使用的泽哥的配置 */
     private static final JsonMapper MAPPER = MapperBuilder.create().enable(JsonFeature.INCLUSION_NOT_NULL).build();
 
-    private static void build(Logger logger) {
-        LogUtil.logger = logger == null ? NORMAL_LOGGER : logger;
+    private static Logger build(Logger logger) {
+        return logger == null ? NORMAL_LOGGER : logger;
     }
 
     /**
@@ -40,11 +39,11 @@ public class LogUtil {
      * @param params   params, can be empty
      */
     public static void trace(Logger logger, String template, Object... params) {
-        build(logger);
-        if (!getLogger().isTraceEnabled()) {
+        logger = build(logger);
+        if (!logger.isTraceEnabled()) {
             return;
         }
-        log(LogLevel.Trace, template, serialize(params));
+        log(LogLevel.Trace, logger, template, serialize(params));
     }
 
     /**
@@ -57,11 +56,11 @@ public class LogUtil {
      * @param params   params, can be empty
      */
     public static void debug(Logger logger, String template, Object... params) {
-        build(logger);
-        if (!getLogger().isDebugEnabled()) {
+        logger = build(logger);
+        if (!logger.isDebugEnabled()) {
             return;
         }
-        log(LogLevel.Debug, template, serialize(params));
+        log(LogLevel.Debug, logger, template, serialize(params));
     }
 
     /**
@@ -74,11 +73,11 @@ public class LogUtil {
      * @param params   params, can be empty
      */
     public static void info(Logger logger, String template, Object... params) {
-        build(logger);
-        if (!getLogger().isInfoEnabled()) {
+        logger = build(logger);
+        if (!logger.isInfoEnabled()) {
             return;
         }
-        log(LogLevel.Info, template, serialize(params));
+        log(LogLevel.Info, logger, template, serialize(params));
     }
 
     /**
@@ -91,11 +90,11 @@ public class LogUtil {
      * @param params   params, can be empty
      */
     public static void warn(Logger logger, String template, Object... params) {
-        build(logger);
-        if (!getLogger().isWarnEnabled()) {
+        logger = build(logger);
+        if (!logger.isWarnEnabled()) {
             return;
         }
-        log(LogLevel.Warn, template, serialize(params));
+        log(LogLevel.Warn, logger, template, serialize(params));
     }
 
     /**
@@ -108,11 +107,11 @@ public class LogUtil {
      * @param params   params, the last is throwable
      */
     public static void error(Logger logger, String template, Object... params) {
-        build(logger);
-        if (!getLogger().isErrorEnabled()) {
+        logger = build(logger);
+        if (!logger.isErrorEnabled()) {
             return;
         }
-        log(LogLevel.Error, template, serialize(params));
+        log(LogLevel.Error, logger, template, serialize(params));
     }
 
     private static Object[] serialize(Object... params) {
@@ -133,7 +132,7 @@ public class LogUtil {
     /**
      * choose log method by level
      */
-    private static void log(LogLevel level, String template, Object... params) {
+    private static void log(LogLevel level, Logger logger, String template, Object... params) {
         switch (level) {
             case Trace:
                 logger.trace(template, params);
@@ -154,17 +153,5 @@ public class LogUtil {
                 logger.info(template, params);
                 break;
         }
-    }
-
-    public static Logger getLogger() {
-        return logger;
-    }
-
-    private enum LogLevel {
-        Trace,
-        Debug,
-        Info,
-        Warn,
-        Error
     }
 }
