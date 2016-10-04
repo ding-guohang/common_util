@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
 
@@ -19,6 +20,7 @@ import java.lang.reflect.Method;
  */
 @Aspect
 @Order(Integer.MAX_VALUE)
+@Service
 public class LogPerformanceAspect {
 
     private static final LogService log = LogService.create(LogPerformanceAspect.class);
@@ -36,14 +38,14 @@ public class LogPerformanceAspect {
 
         long start = System.currentTimeMillis();
         Object ret = point.proceed();
-        logAndMonitor(annotation, start, method);
+        logAndMonitor(annotation, start, method, point.getTarget().getClass().getSimpleName());
         return ret;
     }
 
-    private void logAndMonitor(LogPerformance annotation, long start, Method method) {
+    private void logAndMonitor(LogPerformance annotation, long start, Method method, String className) {
         String flow = annotation.flow();
         boolean finish = annotation.finish();
-        String name = LogConstants.JOINER.skipNulls().join(method.getClass().getSimpleName(), method.getName());
+        String name = LogConstants.JOINER.skipNulls().join(className, method.getName());
         long cost = System.currentTimeMillis() - start;
 
         // 记录方法耗时
@@ -51,7 +53,7 @@ public class LogPerformanceAspect {
         // 记录流耗时
         if (StringUtils.isNotBlank(flow)) {
             if (finish) {
-                doLogAndMonitor(LogConstants.JOINER.join(flow, name), LogConstants.getFlow(name) + cost);
+                doLogAndMonitor(LogConstants.JOINER.join(flow, name), LogConstants.getFlow(flow) + cost);
                 LogConstants.clear(flow);
             } else {
                 // 增加流耗时
