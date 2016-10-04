@@ -28,11 +28,22 @@ public class LogService {
 
     /**
      * get instance by log
+     *
      * @return logService with log or NORMAL_LOGGER
      */
     public static LogService create(Logger logger) {
-        NORMAL_LOGGER.info("init logService {}", logger);
+        NORMAL_LOGGER.info("init logService by logger {}", logger);
         return new LogService(logger);
+    }
+
+    /**
+     * get instance by class
+     *
+     * @return logService with log or NORMAL_LOGGER
+     */
+    public static LogService create(Class clazz) {
+        NORMAL_LOGGER.info("init logService by class {}", clazz);
+        return new LogService(LoggerFactory.getLogger(clazz));
     }
 
     public final void trace(String template, Object... params) {
