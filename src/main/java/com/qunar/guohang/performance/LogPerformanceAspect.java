@@ -15,6 +15,7 @@ import java.lang.reflect.Method;
 
 /**
  * 记录方法和流的耗时
+ * TODO 在FlowBlock中应该记录开始时间更好一点
  *
  * @author guohang.ding on 16-10-4
  */
