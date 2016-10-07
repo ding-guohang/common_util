@@ -34,7 +34,7 @@ public class LogPerformanceAspect {
     private static final LogService log = LogService.create(LogPerformanceAspect.class);
 
     @Resource
-    private List<MethodFilter> filters; // SPI
+    private List<MethodFilter> filters; // TODO SPI or @Resource ? All of these depends on Spring...
 
     @Around("@annotation(LogPerformance)")
     public Object logPerformance(ProceedingJoinPoint point) throws Throwable {
