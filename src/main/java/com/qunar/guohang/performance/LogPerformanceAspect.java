@@ -1,6 +1,10 @@
 package com.qunar.guohang.performance;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.qunar.flight.qmonitor.QMonitor;
+import com.qunar.guohang.filter.MethodFilter;
+import com.qunar.guohang.filter.MethodFilterComparator;
 import com.qunar.guohang.log.LogService;
 import com.qunar.guohang.util.AnnotationUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -11,11 +15,14 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 记录方法和流的耗时
- * TODO 在FlowBlock中应该记录开始时间更好一点
  *
  * @author guohang.ding on 16-10-4
  */
@@ -25,6 +32,9 @@ import java.lang.reflect.Method;
 public class LogPerformanceAspect {
 
     private static final LogService log = LogService.create(LogPerformanceAspect.class);
+
+    @Resource
+    private List<MethodFilter> filters; // SPI
 
     @Around("@annotation(LogPerformance)")
     public Object logPerformance(ProceedingJoinPoint point) throws Throwable {
@@ -38,7 +48,12 @@ public class LogPerformanceAspect {
         }
 
         long start = System.currentTimeMillis();
+        List<MethodFilter> filterList = exclusion(filters, annotation);
+        preHandle(filterList, point);
+
         Object ret = point.proceed();
+
+        postHandle(filterList, point);
         logAndMonitor(annotation, start, method, point.getTarget().getClass().getSimpleName());
         return ret;
     }
@@ -66,5 +81,38 @@ public class LogPerformanceAspect {
     private void doLogAndMonitor(String name, long cost) {
         log.info(LogConstants.COST_FORMAT, name, cost);
         QMonitor.recordOne(name, cost);
+    }
+
+    private void preHandle(List<MethodFilter> filters, ProceedingJoinPoint point) {
+        Collections.sort(filters, MethodFilterComparator.getInstance());
+
+        for (MethodFilter filter : filters) {
+            filter.preHandle(point);
+        }
+    }
+
+    private void postHandle(List<MethodFilter> filters, ProceedingJoinPoint point) {
+        for (MethodFilter filter : filters) {
+            filter.postHandle(point);
+        }
+    }
+
+    private List<MethodFilter> exclusion(List<MethodFilter> filters, LogPerformance logPerformance) {
+        Class<? extends MethodFilter>[] exclusions = logPerformance.exclusion();
+        if (exclusions == null || exclusions.length == 0) {
+            return filters;
+        }
+
+        Map<Class<? extends MethodFilter>, MethodFilter> map = Maps.newHashMap();
+        for (MethodFilter filter : filters) {
+            map.put(filter.getClass(), filter);
+        }
+        for (Class c : exclusions) {
+            if (map.containsKey(c)) {
+                map.remove(c);
+            }
+        }
+
+        return Lists.newArrayList(map.values());
     }
 }
