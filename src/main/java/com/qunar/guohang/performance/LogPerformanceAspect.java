@@ -92,14 +92,15 @@ public class LogPerformanceAspect {
     }
 
     private void postHandle(List<MethodFilter> filters, ProceedingJoinPoint point) {
-        for (MethodFilter filter : filters) {
-            filter.postHandle(point);
+        // 倒序
+        for (int i = filters.size() - 1; i >= 0; i--) {
+            filters.get(i).postHandle(point);
         }
     }
 
     private List<MethodFilter> exclusion(List<MethodFilter> filters, LogPerformance logPerformance) {
         Class<? extends MethodFilter>[] exclusions = logPerformance.exclusion();
-        if (exclusions == null || exclusions.length == 0) {
+        if (exclusions.length == 0) {
             return filters;
         }
 
