@@ -36,17 +36,17 @@ public class MethodFilterComparator implements Comparator<MethodFilter> {
     public int compare(MethodFilter f1, MethodFilter f2) {
         // null means lowest priority
         if (f1 == null) {
-            return f2 == null ? 0 : -1;
+            return f2 == null ? 0 : 1;
         }
 
         // order value is greater means lower priority
         if (f1.getOrder() != f2.getOrder()) {
-            return f1.getOrder() > f2.getOrder() ? -1 : 1;
+            return f1.getOrder() > f2.getOrder() ? 1 : -1;
         }
 
         // name value is greater means highest priority
         if (!StringUtils.equals(f1.getClass().getName(), f2.getClass().getName())) {
-            return f1.getClass().getName().compareTo(f2.getClass().getName());
+            return f2.getClass().getName().compareTo(f1.getClass().getName());
         }
 
         // default is arbitrary positions
