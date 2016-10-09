@@ -1,7 +1,9 @@
 package com.qunar.guohang.performance;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.qunar.flight.qmonitor.QMonitor;
 import com.qunar.guohang.filter.MethodFilter;
 import com.qunar.guohang.filter.MethodFilterComparator;
@@ -19,7 +21,7 @@ import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * 记录方法和流的耗时
@@ -34,7 +36,7 @@ public class LogPerformanceAspect {
     private static final LogService log = LogService.create(LogPerformanceAspect.class);
 
     @Resource
-    private List<MethodFilter> filters; // TODO SPI or @Resource ? All of these depends on Spring...
+    private List<MethodFilter> filters; // TODO SPI or @Resource ? All of these depend on Spring...
 
     @Around("@annotation(LogPerformance)")
     public Object logPerformance(ProceedingJoinPoint point) throws Throwable {
@@ -104,6 +106,7 @@ public class LogPerformanceAspect {
             return filters;
         }
 
+        /*
         Map<Class<? extends MethodFilter>, MethodFilter> map = Maps.newHashMap();
         for (MethodFilter filter : filters) {
             map.put(filter.getClass(), filter);
@@ -115,5 +118,14 @@ public class LogPerformanceAspect {
         }
 
         return Lists.newArrayList(map.values());
+        */
+        // maybe 'Iterables.filter' is better? but i don't need to lazy it...
+        final Set<Class<? extends MethodFilter>> set = Sets.newHashSet(exclusions);
+        return Lists.newArrayList(Iterables.filter(filters, new Predicate<MethodFilter>() {
+            @Override
+            public boolean apply(MethodFilter methodFilter) {
+                return methodFilter != null && !set.contains(methodFilter.getClass());
+            }
+        }).iterator());
     }
 }
