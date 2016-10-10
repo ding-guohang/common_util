@@ -12,7 +12,7 @@ import org.springframework.core.Ordered;
  */
 public interface MethodFilter extends Ordered {
 
-    public void preHandle(ProceedingJoinPoint pjp);
+    void preHandle(ProceedingJoinPoint pjp);
 
-    public void postHandle(ProceedingJoinPoint pjp);
+    void postHandle(ProceedingJoinPoint pjp);
 }
