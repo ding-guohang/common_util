@@ -7,6 +7,7 @@
     <version>1.0.1-SNAPSHOT</version>
     <modules>
         <module>documentation</module>
+        <module>log</module>
     </modules>
     <packaging>pom</packaging>
 
