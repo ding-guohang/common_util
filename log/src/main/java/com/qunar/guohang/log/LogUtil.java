@@ -1,9 +1,8 @@
 package com.qunar.guohang.log;
 
+import com.qunar.guohang.util.SerializeStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.qunar.guohang.util.SerializeUtil.serialize;
 
 /**
  * Normal Util for logging
@@ -19,6 +18,7 @@ import static com.qunar.guohang.util.SerializeUtil.serialize;
 public class LogUtil {
 
     private static final Logger NORMAL_LOGGER = LoggerFactory.getLogger(LogUtil.class);
+    private static final SerializeStrategy serialize = new SerializeStrategy();
 
     private static Logger build(Logger logger) {
         return logger == null ? NORMAL_LOGGER : logger;
@@ -38,7 +38,7 @@ public class LogUtil {
         if (!logger.isTraceEnabled()) {
             return;
         }
-        log(LogLevel.Trace, logger, template, serialize(params));
+        log(LogLevel.Trace, logger, template, params);
     }
 
     /**
@@ -55,7 +55,7 @@ public class LogUtil {
         if (!logger.isDebugEnabled()) {
             return;
         }
-        log(LogLevel.Debug, logger, template, serialize(params));
+        log(LogLevel.Debug, logger, template, params);
     }
 
     /**
@@ -72,7 +72,7 @@ public class LogUtil {
         if (!logger.isInfoEnabled()) {
             return;
         }
-        log(LogLevel.Info, logger, template, serialize(params));
+        log(LogLevel.Info, logger, template, params);
     }
 
     /**
@@ -89,7 +89,7 @@ public class LogUtil {
         if (!logger.isWarnEnabled()) {
             return;
         }
-        log(LogLevel.Warn, logger, template, serialize(params));
+        log(LogLevel.Warn, logger, template, params);
     }
 
     /**
@@ -106,7 +106,7 @@ public class LogUtil {
         if (!logger.isErrorEnabled()) {
             return;
         }
-        log(LogLevel.Error, logger, template, serialize(params));
+        log(LogLevel.Error, logger, template, params);
     }
 
     /**
@@ -115,22 +115,22 @@ public class LogUtil {
     private static void log(LogLevel level, Logger logger, String template, Object... params) {
         switch (level) {
             case Trace:
-                logger.trace(template, params);
+                logger.trace(template, serialize.modify(params));
                 break;
             case Debug:
-                logger.debug(template, params);
+                logger.debug(template, serialize.modify(params));
                 break;
             case Info:
-                logger.info(template, params);
+                logger.info(template, serialize.modify(params));
                 break;
             case Warn:
-                logger.warn(template, params);
+                logger.warn(template, serialize.modify(params));
                 break;
             case Error:
-                logger.error(template, params);
+                logger.error(template, serialize.modify(params));
                 break;
             default:
-                logger.info(template, params);
+                logger.info(template, serialize.modify(params));
                 break;
         }
     }

@@ -13,5 +13,5 @@ public interface ParamStrategy {
      *
      * @return Object[] for other strategies and serializeUtil
      */
-    Object[] modify(Object... param);
+    Object[] modify(Object... params);
 }

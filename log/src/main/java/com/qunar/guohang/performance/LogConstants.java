@@ -1,6 +1,12 @@
 package com.qunar.guohang.performance;
 
 import com.google.common.base.Joiner;
+import com.qunar.guohang.strategies.ParamStrategy;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Constants for log and performance
@@ -15,6 +21,8 @@ public class LogConstants {
             return new FlowBlock();
         }
     };
+
+    private static ConcurrentHashMap<Class<? extends ParamStrategy>, ParamStrategy> strategies = new ConcurrentHashMap<Class<? extends ParamStrategy>, ParamStrategy>();
 
     public static final String SEPARATOR = "_";
     public static final Joiner JOINER = Joiner.on(SEPARATOR);
@@ -31,5 +39,18 @@ public class LogConstants {
 
     public static void clear(String name) {
         flow.get().remove(name);
+    }
+
+    /**
+     * 允许用户在使用的时候，自定义自己的参数处理策略并加入到处理过程中
+     */
+    public static void addStrategy(ParamStrategy strategy) {
+        if (strategy != null) {
+            strategies.putIfAbsent(strategy.getClass(), strategy);
+        }
+    }
+
+    public static List<ParamStrategy> buildStrategies() {
+        return Collections.unmodifiableList(new ArrayList<ParamStrategy>(strategies.values()));
     }
 }
