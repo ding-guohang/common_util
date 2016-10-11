@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ducumentation</artifactId>
+    <artifactId>documentation</artifactId>
     <packaging>jar</packaging>
 
-    <name>ducumentation</name>
+    <name>documentation</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
