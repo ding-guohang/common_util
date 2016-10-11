@@ -2,9 +2,8 @@ package com.qunar.guohang.log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import qunar.api.json.JsonFeature;
-import qunar.api.json.JsonMapper;
-import qunar.api.json.MapperBuilder;
+
+import static com.qunar.guohang.util.SerializeUtil.serialize;
 
 /**
  * Normal Util for logging
@@ -17,13 +16,9 @@ import qunar.api.json.MapperBuilder;
  *
  * @author guohang.ding on 16-10-2
  */
-@SuppressWarnings("unused")
 public class LogUtil {
 
     private static final Logger NORMAL_LOGGER = LoggerFactory.getLogger(LogUtil.class);
-
-    /** 这个具体是什么属性还需要确认一下，目前直接使用的泽哥的配置 */
-    private static final JsonMapper MAPPER = MapperBuilder.create().enable(JsonFeature.INCLUSION_NOT_NULL).build();
 
     private static Logger build(Logger logger) {
         return logger == null ? NORMAL_LOGGER : logger;
@@ -112,21 +107,6 @@ public class LogUtil {
             return;
         }
         log(LogLevel.Error, logger, template, serialize(params));
-    }
-
-    private static Object[] serialize(Object... params) {
-        if (params != null && params.length > 0) {
-            Object[] trimmed = new Object[params.length];
-            for (int i = 0; i < params.length; i++) {
-                trimmed[i] = params[i] instanceof Throwable ? params[i] : serialize(params[i]);
-            }
-            return trimmed;
-        }
-        return null;
-    }
-
-    private static String serialize(Object param) {
-        return MAPPER.writeValueAsString(param);
     }
 
     /**
