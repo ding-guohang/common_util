@@ -1,4 +1,5 @@
 --------------------------------------------------------------------------------
 #### **项目信息**:
-#### *wiki*:(http://wiki.corp.qunar.com/pages/viewpage.action?pageId=138710608)<br />
+#### *日志小助手-wiki*:(http://wiki.corp.qunar.com/pages/viewpage.action?pageId=138710608)<br />
+#### *接口文档生成器-wiki*:(http://wiki.corp.qunar.com/pages/viewpage.action?pageId=139691072)<br />
 --------------------------------------------------------------------------------
