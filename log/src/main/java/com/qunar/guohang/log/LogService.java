@@ -6,6 +6,7 @@ import com.qunar.guohang.strategies.ParamStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class LogService {
      * @return logService with log or NORMAL_LOGGER
      */
     public static LogService create(Logger logger) {
-        NORMAL_LOGGER.info("init logService by logger {}", logger);
+        NORMAL_LOGGER.debug("init logService by logger {}", logger);
         return new LogService(logger);
     }
 
@@ -53,7 +54,7 @@ public class LogService {
      * @return logService with log or NORMAL_LOGGER
      */
     public static LogService create(Class clazz) {
-        NORMAL_LOGGER.info("init logService by class {}", clazz);
+        NORMAL_LOGGER.debug("init logService by class {}", clazz);
         return new LogService(LoggerFactory.getLogger(clazz));
     }
 
@@ -62,10 +63,20 @@ public class LogService {
      * happens before serialize
      */
     private Object[] prepareParams(Object... params) {
-        for (ParamStrategy strategy : strategies) {
-            params = strategy.modify(params);
+        Object[] ret = null;
+        if (params != null) {
+            ret = new Object[params.length];
+            System.arraycopy(params, 0, ret, 0, params.length);
         }
-
+        try {
+            for (ParamStrategy strategy : strategies) {
+                ret = strategy.modify(ret);
+            }
+            return ret;
+        } catch (Throwable throwable) {
+            // 如果出现问题，保证不影响原始状态使用
+            NORMAL_LOGGER.error("Something Wrong With LogService.prepareParams......params={}", params, throwable);
+        }
         return params;
     }
 

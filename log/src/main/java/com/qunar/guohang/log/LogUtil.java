@@ -109,28 +109,38 @@ public class LogUtil {
         log(LogLevel.Error, logger, template, params);
     }
 
+    private static void log(LogLevel level, Logger logger, String template, Object... params) {
+        try {
+            logSwitch(level, logger, template, serialize.modify(params));
+        } catch (Throwable throwable) {
+            // 如果出现问题，保证不影响原始状态使用
+            NORMAL_LOGGER.error("Something Wrong With LogUtil.log...", throwable);
+            logSwitch(level, logger, template, params);
+        }
+    }
+
     /**
      * choose log method by level
      */
-    private static void log(LogLevel level, Logger logger, String template, Object... params) {
+    private static void logSwitch(LogLevel level, Logger logger, String template, Object params) {
         switch (level) {
             case Trace:
-                logger.trace(template, serialize.modify(params));
+                logger.trace(template, params);
                 break;
             case Debug:
-                logger.debug(template, serialize.modify(params));
+                logger.debug(template, params);
                 break;
             case Info:
-                logger.info(template, serialize.modify(params));
+                logger.info(template, params);
                 break;
             case Warn:
-                logger.warn(template, serialize.modify(params));
+                logger.warn(template, params);
                 break;
             case Error:
-                logger.error(template, serialize.modify(params));
+                logger.error(template, params);
                 break;
             default:
-                logger.info(template, serialize.modify(params));
+                logger.info(template, params);
                 break;
         }
     }
