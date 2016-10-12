@@ -1,6 +1,7 @@
 package com.qunar.guohang.log;
 
 import com.qunar.guohang.util.SerializeStrategy;
+import com.sun.istack.internal.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,7 @@ public class LogUtil {
      * @param template string template, normal is empty
      * @param params   params, can be empty
      */
-    public static void trace(Logger logger, String template, Object... params) {
+    public static void trace(@Nullable Logger logger, String template, Object... params) {
         logger = build(logger);
         if (!logger.isTraceEnabled()) {
             return;
@@ -50,7 +51,7 @@ public class LogUtil {
      * @param template string template, normal is empty
      * @param params   params, can be empty
      */
-    public static void debug(Logger logger, String template, Object... params) {
+    public static void debug(@Nullable Logger logger, String template, Object... params) {
         logger = build(logger);
         if (!logger.isDebugEnabled()) {
             return;
@@ -67,7 +68,7 @@ public class LogUtil {
      * @param template string template, normal is empty
      * @param params   params, can be empty
      */
-    public static void info(Logger logger, String template, Object... params) {
+    public static void info(@Nullable Logger logger, String template, Object... params) {
         logger = build(logger);
         if (!logger.isInfoEnabled()) {
             return;
@@ -84,7 +85,7 @@ public class LogUtil {
      * @param template string template, normal is empty
      * @param params   params, can be empty
      */
-    public static void warn(Logger logger, String template, Object... params) {
+    public static void warn(@Nullable Logger logger, String template, Object... params) {
         logger = build(logger);
         if (!logger.isWarnEnabled()) {
             return;
@@ -101,7 +102,7 @@ public class LogUtil {
      * @param template string template, normal is empty
      * @param params   params, the last is throwable
      */
-    public static void error(Logger logger, String template, Object... params) {
+    public static void error(@Nullable Logger logger, String template, Object... params) {
         logger = build(logger);
         if (!logger.isErrorEnabled()) {
             return;
