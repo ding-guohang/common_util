@@ -3,7 +3,6 @@ package com.qunar.guohang.log;
 import com.google.common.collect.Lists;
 import com.qunar.guohang.performance.LogConstants;
 import com.qunar.guohang.strategies.ParamStrategy;
-import com.sun.istack.internal.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,7 @@ public class LogService {
      *
      * @return logService with log or NORMAL_LOGGER
      */
-    public static LogService create(@Nullable Logger logger) {
+    public static LogService create(Logger logger) {
         NORMAL_LOGGER.info("init logService by logger {}", logger);
         return new LogService(logger);
     }
