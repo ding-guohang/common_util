@@ -126,6 +126,6 @@ public class LogPerformanceAspect {
             public boolean apply(MethodFilter methodFilter) {
                 return methodFilter != null && !set.contains(methodFilter.getClass());
             }
-        }).iterator());
+        }));
     }
 }
