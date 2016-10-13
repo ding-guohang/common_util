@@ -28,13 +28,15 @@ public class MethodFilterComparator implements Comparator<MethodFilter> {
     }
 
     /**
+     * greater value means lower priority
+     *
      * @return a negative integer, zero, or a positive integer as the
      *         first argument is less than, equal to, or greater than the
      *         second.
      */
     @Override
     public int compare(MethodFilter f1, MethodFilter f2) {
-        // null means lowest priority
+        // null means lowest priority, it can be instead of Ordering.nullsLast
         if (f1 == null) {
             return f2 == null ? 0 : 1;
         }

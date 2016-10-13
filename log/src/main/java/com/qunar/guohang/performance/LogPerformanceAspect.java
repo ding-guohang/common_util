@@ -87,6 +87,8 @@ public class LogPerformanceAspect {
 
     private void preHandle(List<MethodFilter> filters, ProceedingJoinPoint point) {
         Collections.sort(filters, MethodFilterComparator.getInstance());
+//        Can do it also by Ordering
+//        Collections.sort(filters, Ordering.<ComparableMethodFilter>natural().nullsFirst());
 
         for (MethodFilter filter : filters) {
             filter.preHandle(point);
