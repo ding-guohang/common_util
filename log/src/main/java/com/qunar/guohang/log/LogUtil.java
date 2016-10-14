@@ -3,6 +3,8 @@ package com.qunar.guohang.log;
 import com.qunar.guohang.util.SerializeStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.FormattingTuple;
+import org.slf4j.helpers.MessageFormatter;
 
 /**
  * Normal Util for logging
@@ -111,18 +113,21 @@ public class LogUtil {
 
     private static void log(LogLevel level, Logger logger, String template, Object... params) {
         try {
-            logSwitch(level, logger, template, serialize.modify(params));
+            Object[] parameters = serialize.modify(params);
+            FormattingTuple ft = MessageFormatter.arrayFormat(template, parameters);
+            logSwitch(level, logger, ft.getMessage(), ft.getThrowable());
         } catch (Throwable throwable) {
             // 如果出现问题，保证不影响原始状态使用
             NORMAL_LOGGER.error("Something Wrong With LogUtil.log...", throwable);
-            logSwitch(level, logger, template, params);
+            logSwitchWithParams(level, logger, template, params);
         }
     }
 
     /**
-     * choose log method by level
+     * choose log method by level with params
+     * do the original things that you want at least
      */
-    private static void logSwitch(LogLevel level, Logger logger, String template, Object params) {
+    private static void logSwitchWithParams(LogLevel level, Logger logger, String template, Object params) {
         switch (level) {
             case Trace:
                 logger.trace(template, params);
@@ -141,6 +146,32 @@ public class LogUtil {
                 break;
             default:
                 logger.info(template, params);
+                break;
+        }
+    }
+
+    /**
+     * choose log method by level with throwable
+     */
+    private static void logSwitch(LogLevel level, Logger logger, String template, Throwable throwable) {
+        switch (level) {
+            case Trace:
+                logger.trace(template);
+                break;
+            case Debug:
+                logger.debug(template);
+                break;
+            case Info:
+                logger.info(template);
+                break;
+            case Warn:
+                logger.warn(template);
+                break;
+            case Error:
+                logger.error(template, throwable);
+                break;
+            default:
+                logger.info(template);
                 break;
         }
     }
