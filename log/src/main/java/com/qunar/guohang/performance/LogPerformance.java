@@ -2,6 +2,7 @@ package com.qunar.guohang.performance;
 
 import com.qunar.guohang.filter.MethodFilter;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -26,6 +27,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface LogPerformance {
 
     /** 流程块，默认不关注流程块 */
