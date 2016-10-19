@@ -1,4 +1,4 @@
-package com.qunar.guohang.util;
+package com.qunar.guohang.log.util;
 
 import com.qunar.flight.qmonitor.QMonitor;
 import com.qunar.guohang.log.LogService;

@@ -1,6 +1,6 @@
 package com.qunar.guohang.log;
 
-import com.qunar.guohang.util.SerializeStrategy;
+import com.qunar.guohang.log.util.SerializeStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.FormattingTuple;

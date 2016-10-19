@@ -1,6 +1,6 @@
-package com.qunar.guohang.util;
+package com.qunar.guohang.log.util;
 
-import com.qunar.guohang.strategies.ParamStrategy;
+import com.qunar.guohang.log.strategies.ParamStrategy;
 import qunar.api.json.JsonFeature;
 import qunar.api.json.JsonMapper;
 import qunar.api.json.MapperBuilder;

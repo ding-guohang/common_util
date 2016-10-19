@@ -1,4 +1,4 @@
-package com.qunar.guohang.performance;
+package com.qunar.guohang.log.performance;
 
 import com.google.common.collect.Maps;
 

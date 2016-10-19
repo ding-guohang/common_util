@@ -1,14 +1,14 @@
-package com.qunar.guohang.performance;
+package com.qunar.guohang.log.performance;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.qunar.flight.qmonitor.QMonitor;
-import com.qunar.guohang.filter.MethodFilter;
-import com.qunar.guohang.filter.MethodFilterComparator;
+import com.qunar.guohang.log.filter.MethodFilter;
+import com.qunar.guohang.log.filter.MethodFilterComparator;
 import com.qunar.guohang.log.LogService;
-import com.qunar.guohang.util.AnnotationUtil;
+import com.qunar.guohang.log.util.AnnotationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +37,7 @@ public class LogPerformanceAspect {
     @Resource
     private List<MethodFilter> filters; // TODO SPI or @Resource ? All of these depend on Spring...
 
-    @Around("@annotation(LogPerformance)")
+    @Around("@annotation(com.qunar.guohang.log.performance.LogPerformance)")
     public Object logPerformance(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();

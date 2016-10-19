@@ -1,4 +1,4 @@
-package com.qunar.guohang.parser;
+package com.qunar.guohang.documentation.parser;
 
 import java.lang.annotation.Annotation;
 

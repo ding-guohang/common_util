@@ -1,4 +1,4 @@
-package com.qunar.guohang.filter;
+package com.qunar.guohang.log.filter;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.core.Ordered;

@@ -1,12 +1,11 @@
 package com.qunar.guohang.log;
 
 import com.google.common.collect.Lists;
-import com.qunar.guohang.performance.LogConstants;
-import com.qunar.guohang.strategies.ParamStrategy;
+import com.qunar.guohang.log.performance.LogConstants;
+import com.qunar.guohang.log.strategies.ParamStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

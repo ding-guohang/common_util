@@ -1,4 +1,4 @@
-package com.qunar.guohang.util;
+package com.qunar.guohang.log.util;
 
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Method;

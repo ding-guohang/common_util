@@ -1,7 +1,7 @@
-package com.qunar.guohang.performance;
+package com.qunar.guohang.log.performance;
 
 import com.google.common.base.Joiner;
-import com.qunar.guohang.strategies.ParamStrategy;
+import com.qunar.guohang.log.strategies.ParamStrategy;
 
 import java.util.ArrayList;
 import java.util.Collections;

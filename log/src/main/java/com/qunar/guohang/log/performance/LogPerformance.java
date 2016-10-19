@@ -1,6 +1,6 @@
-package com.qunar.guohang.performance;
+package com.qunar.guohang.log.performance;
 
-import com.qunar.guohang.filter.MethodFilter;
+import com.qunar.guohang.log.filter.MethodFilter;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
