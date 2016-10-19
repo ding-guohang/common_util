@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author guohang.ding on 2016/10/7.
  */
-public class MethodFilterComparator {
+public final class MethodFilterComparator {
 
 
     private MethodFilterComparator() {
@@ -22,7 +22,7 @@ public class MethodFilterComparator {
         Collections.sort(collection, FilterComparator.getInstance());
     }
 
-    private static class FilterComparator implements Comparator<MethodFilter> {
+    private static final class FilterComparator implements Comparator<MethodFilter> {
 
         private static FilterComparator INSTANCE = null;
         private static final Object LOCK = new Object();
@@ -49,7 +49,7 @@ public class MethodFilterComparator {
          * second.
          */
         @Override
-        public int compare(MethodFilter f1, MethodFilter f2) {
+        public final int compare(MethodFilter f1, MethodFilter f2) {
             // null means lowest priority, it can be instead of Ordering.nullsLast
             if (f1 == null) {
                 return f2 == null ? 0 : 1;
