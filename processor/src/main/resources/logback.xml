@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+    <property name="APP_Name" value="pay_provider" />
+    <contextName>${APP_Name}</contextName>
+     <!--设置日志输出根目录-->
+    <property name="log.dir" value="processor/logs"/>
+    <property name="encoding" value="UTF-8"/>
+
+    <appender name="console" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/console.log</file>
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss} %5p %c:%L] %m%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.dir}/console.log.%d{yyyy-MM-dd-HH}</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console" />
+    </root>
+</configuration>

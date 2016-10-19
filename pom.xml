@@ -8,6 +8,7 @@
     <modules>
         <module>documentation</module>
         <module>log</module>
+        <module>processor</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -32,6 +33,7 @@
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
         </dependency>
+        <!-- useful common -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -41,22 +43,33 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
+            <groupId>qunar.common</groupId>
+            <artifactId>common-api</artifactId>
+        </dependency>
+        <!-- log -->
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>qunar.common</groupId>
-            <artifactId>common-api</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <!-- json -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>1.8.9</version>
         </dependency>
+        <!-- spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -65,6 +78,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
+        <!-- monitor -->
         <dependency>
             <groupId>com.qunar.flight</groupId>
             <artifactId>qmonitor</artifactId>
