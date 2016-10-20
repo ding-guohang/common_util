@@ -4,7 +4,7 @@
 
     <groupId>com.qunar.guohang</groupId>
     <artifactId>common_util</artifactId>
-    <version>1.0.0</version>
+    <version>guohang-SNAPSHOT</version>
     <modules>
         <module>documentation</module>
         <module>log</module>
