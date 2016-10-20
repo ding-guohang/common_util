@@ -7,7 +7,6 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <version>0.0.0</version>
 
     <artifactId>processor</artifactId>
     <packaging>jar</packaging>
