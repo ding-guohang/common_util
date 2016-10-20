@@ -58,6 +58,16 @@ public final class LogService {
     }
 
     /**
+     * get instance by name
+     *
+     * @return logService with log or NORMAL_LOGGER
+     */
+    public static LogService create(String name) {
+        NORMAL_LOGGER.debug("init logService by name {}", name);
+        return new LogService(LoggerFactory.getLogger(name));
+    }
+
+    /**
      * prepare params by strategies
      * happens before serialize
      */
