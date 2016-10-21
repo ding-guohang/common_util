@@ -14,6 +14,7 @@ public class SerializeStrategy implements ParamStrategy {
 
     /** 这个具体是什么属性还需要确认一下，目前直接使用的泽哥的配置 */
     private final JsonMapper MAPPER = MapperBuilder.create().enable(JsonFeature.INCLUSION_NOT_NULL).build();
+    private final JsonMapper mapper = MapperBuilder.getDefaultMapper();
 
     private Object serialize(Object param) {
         return MAPPER.writeValueAsString(param);
