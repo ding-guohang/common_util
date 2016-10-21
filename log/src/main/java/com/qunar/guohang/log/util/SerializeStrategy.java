@@ -24,7 +24,8 @@ public class SerializeStrategy implements ParamStrategy {
         if (params != null && params.length > 0) {
             Object[] trimmed = new Object[params.length];
             for (int i = 0; i < params.length; i++) {
-                trimmed[i] = params[i] instanceof Throwable ? params[i] : serialize(params[i]);
+                trimmed[i] = (params[i] instanceof Throwable || params[i] instanceof String) ?
+                        params[i] : serialize(params[i]);
             }
             return trimmed;
         }
