@@ -7,7 +7,6 @@
 ### **Overview**
 
 写了一些通用的小工具，小组件，增加开发效率，或者增加开发乐趣。
-// 比较尴尬，v1写了个com.qunar.guohang的maven坐标
 
 ```
 <groupId>com.qunar.flight</groupId>
