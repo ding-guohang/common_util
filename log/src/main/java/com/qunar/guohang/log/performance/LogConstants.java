@@ -1,10 +1,10 @@
 package com.qunar.guohang.log.performance;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.qunar.guohang.log.strategies.ParamStrategy;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
@@ -51,6 +51,6 @@ public class LogConstants {
     }
 
     public static List<ParamStrategy> buildStrategies() {
-        return Collections.unmodifiableList(new ArrayList<>(strategies.values()));
+        return Collections.unmodifiableList(Lists.newArrayList(strategies.values()));
     }
 }
