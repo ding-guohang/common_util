@@ -1,4 +1,4 @@
-package com.qunar.guohang.log.filter;
+package com.qunar.flight.log.filter;
 
 import org.apache.commons.lang3.StringUtils;
 

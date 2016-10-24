@@ -1,4 +1,4 @@
-package com.qunar.guohang.log.strategies;
+package com.qunar.flight.log.strategies;
 
 import org.slf4j.helpers.FormattingTuple;
 

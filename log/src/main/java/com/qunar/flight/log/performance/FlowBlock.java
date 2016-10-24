@@ -1,4 +1,4 @@
-package com.qunar.guohang.log.performance;
+package com.qunar.flight.log.performance;
 
 import com.google.common.collect.Maps;
 

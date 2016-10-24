@@ -1,4 +1,4 @@
-package com.qunar.guohang.log;
+package com.qunar.flight.log;
 
 /**
  * Log level

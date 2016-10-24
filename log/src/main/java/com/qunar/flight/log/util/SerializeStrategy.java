@@ -1,6 +1,6 @@
-package com.qunar.guohang.log.util;
+package com.qunar.flight.log.util;
 
-import com.qunar.guohang.log.strategies.ParamStrategy;
+import com.qunar.flight.log.strategies.ParamStrategy;
 import qunar.api.json.JsonMapper;
 import qunar.api.json.MapperBuilder;
 

@@ -1,4 +1,4 @@
-package com.qunar.guohang.log.filter;
+package com.qunar.flight.log.filter;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.stereotype.Service;

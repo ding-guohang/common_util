@@ -1,8 +1,8 @@
-package com.qunar.guohang.log;
+package com.qunar.flight.log;
 
 import com.google.common.collect.Lists;
-import com.qunar.guohang.log.performance.LogConstants;
-import com.qunar.guohang.log.strategies.ParamStrategy;
+import com.qunar.flight.log.strategies.ParamStrategy;
+import com.qunar.flight.log.performance.LogConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

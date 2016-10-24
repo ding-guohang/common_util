@@ -1,9 +1,9 @@
-package com.qunar.guohang.log.performance;
+package com.qunar.flight.log.performance;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.qunar.guohang.log.strategies.ParamStrategy;
+import com.qunar.flight.log.strategies.ParamStrategy;
 
 import java.util.Collections;
 import java.util.List;
