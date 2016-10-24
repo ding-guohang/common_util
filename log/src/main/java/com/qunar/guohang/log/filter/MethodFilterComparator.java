@@ -24,7 +24,7 @@ public final class MethodFilterComparator {
 
     private static final class FilterComparator implements Comparator<MethodFilter> {
 
-        private static FilterComparator INSTANCE = null;
+        private static volatile FilterComparator INSTANCE = null;
         private static final Object LOCK = new Object();
 
         private FilterComparator() {
@@ -33,8 +33,10 @@ public final class MethodFilterComparator {
         private static FilterComparator getInstance() {
             if (INSTANCE == null) {
                 synchronized (LOCK) {
-                    INSTANCE = new FilterComparator();
-                    return INSTANCE;
+                    if (INSTANCE == null) {
+                        INSTANCE = new FilterComparator();
+                        return INSTANCE;
+                    }
                 }
             }
 
