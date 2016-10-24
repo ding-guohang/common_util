@@ -7,14 +7,18 @@ import qunar.api.json.MapperBuilder;
 
 /**
  * Json序列化策略
+ * <p>
+ * 使用JsonFeature，Long型mask，每一位对应一个策略的使用
+ *
+ * @see qunar.api.json.JsonFeature
+ * enable就是或，disable就是与非
  *
  * @author guohang.ding on 16-10-11
  */
 public class SerializeStrategy implements ParamStrategy {
 
-    /** 这个具体是什么属性还需要确认一下，目前直接使用的泽哥的配置 */
-    private final JsonMapper MAPPER = MapperBuilder.create().enable(JsonFeature.INCLUSION_NOT_NULL).build();
-    private final JsonMapper mapper = MapperBuilder.getDefaultMapper();
+    /** default features */
+    private final JsonMapper MAPPER = MapperBuilder.getDefaultMapper();
 
     private Object serialize(Object param) {
         return MAPPER.writeValueAsString(param);
