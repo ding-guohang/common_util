@@ -83,7 +83,6 @@ public final class LogService {
                     }
                 }
             }
-
             for (ParamStrategy strategy : strategies) {
                 ret = strategy.modify(ret);
             }
