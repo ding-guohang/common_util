@@ -1,8 +1,7 @@
 package com.qunar.flight.log;
 
-import com.google.common.collect.Lists;
 import com.qunar.flight.log.strategies.ParamStrategy;
-import com.qunar.flight.log.performance.LogConstants;
+import com.qunar.flight.log.strategies.StrategiesLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,15 +25,13 @@ public final class LogService {
 
     private static final Logger NORMAL_LOGGER = LoggerFactory.getLogger(LogService.class);
     private Logger log;
-    private List<ParamStrategy> strategies;
+    private List<ParamStrategy> strategies = null;
 
     private LogService() {
-        strategies = Lists.newArrayList();
     }
 
     private LogService(Logger logger) {
         log = logger == null ? NORMAL_LOGGER : logger;
-        strategies = LogConstants.buildStrategies();
     }
 
     /**
@@ -72,13 +69,14 @@ public final class LogService {
      * happens before serialize
      */
     private Object[] prepareParams(Object... params) {
-        Object[] ret = null;
-        if (params != null) {
-            ret = new Object[params.length];
-            System.arraycopy(params, 0, ret, 0, params.length);
-        }
         try {
-            for (ParamStrategy strategy : strategies) {
+            Object[] ret = null;
+            if (params != null) {
+                ret = new Object[params.length];
+                System.arraycopy(params, 0, ret, 0, params.length);
+            }
+
+            for (ParamStrategy strategy : StrategiesLoader.getStrategies()) {
                 ret = strategy.modify(ret);
             }
             return ret;

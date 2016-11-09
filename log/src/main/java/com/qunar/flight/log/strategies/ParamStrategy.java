@@ -9,6 +9,8 @@ import org.slf4j.helpers.FormattingTuple;
  * <p>
  * 还有问题是，这个操作发生在实现类之前，比如logback的filter，也许应该过滤掉，但是却浪费了资源去处理参数
  *
+ * todo 基于它，实践ExtensionLoader 和 ServiceLoader
+ *
  * @author guohang.ding on 16-10-11
  * @see FormattingTuple ft = MessageFormatter.arrayFormat(message, argArray);
  */

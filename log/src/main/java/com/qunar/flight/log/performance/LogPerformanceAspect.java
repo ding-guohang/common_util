@@ -35,7 +35,7 @@ public class LogPerformanceAspect {
     private static final LogService log = LogService.create(LogPerformanceAspect.class);
 
     @Resource
-    private List<MethodFilter> filters; // TODO SPI or @Resource ? All of these depend on Spring...
+    private List<MethodFilter> filters; // TODO SPI or @Resource ? All of these depend on Spring... -> SPI !
 
     @Around("@annotation(com.qunar.flight.log.performance.LogPerformance)")
     public Object logPerformance(ProceedingJoinPoint point) throws Throwable {
