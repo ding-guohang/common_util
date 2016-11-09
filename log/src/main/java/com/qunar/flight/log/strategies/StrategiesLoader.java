@@ -1,5 +1,8 @@
 package com.qunar.flight.log.strategies;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
 import java.util.ServiceLoader;
 
 /**
@@ -19,7 +22,17 @@ public class StrategiesLoader {
      */
     private static final ServiceLoader<ParamStrategy> loader = ServiceLoader.load(ParamStrategy.class);
 
+    private static List<ParamStrategy> strategies = null;
+    private static final Object LOCK = new Object();
+
     public static Iterable<ParamStrategy> getStrategies() {
-        return loader;
+        if (strategies == null) {
+            synchronized (LOCK) {
+                if (strategies == null) {
+                    strategies = Lists.newArrayList(loader);
+                }
+            }
+        }
+        return strategies;
     }
 }
