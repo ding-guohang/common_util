@@ -1,5 +1,6 @@
 package com.qunar.flight.log;
 
+import com.google.common.collect.Lists;
 import com.qunar.flight.log.strategies.ParamStrategy;
 import com.qunar.flight.log.strategies.StrategiesLoader;
 import org.slf4j.Logger;
@@ -75,8 +76,15 @@ public final class LogService {
                 ret = new Object[params.length];
                 System.arraycopy(params, 0, ret, 0, params.length);
             }
+            if (strategies == null) {
+                synchronized (this) {
+                    if (strategies == null) {
+                        strategies = Lists.newArrayList(StrategiesLoader.getStrategies());
+                    }
+                }
+            }
 
-            for (ParamStrategy strategy : StrategiesLoader.getStrategies()) {
+            for (ParamStrategy strategy : strategies) {
                 ret = strategy.modify(ret);
             }
             return ret;
