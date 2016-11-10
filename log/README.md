@@ -24,3 +24,8 @@
         @LogPerformance关注方法性能
     更牵强的拓展
         实现MethodFilter完成自定义性能监控、 实现ParamStrategy并手动注入完成日志参数的自定义处理
+        
+        
+**TODO List**
+_考虑使用异步的方式处理参数、写日志……需要解决logback中的线程展示问题_
+_现在这样的包装更好，还是Slf4j-log-logback这种中间层更好达到目的？_
