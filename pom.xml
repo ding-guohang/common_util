@@ -9,6 +9,7 @@
         <module>documentation</module>
         <module>log</module>
         <module>processor</module>
+        <module>log-over-logback</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -24,9 +25,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <qunar.common.version>8.2.11</qunar.common.version>
         <guava.version>19.0</guava.version>
-        <org.slf4j.version>1.7.21</org.slf4j.version>
+        <org.slf4j.version>1.7.5</org.slf4j.version>
         <org.codehaus.jackson.version>1.9.13</org.codehaus.jackson.version>
+        <logback.self.version>1.0.7</logback.self.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.self.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.self.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -50,14 +67,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
         </dependency>
         <!-- json -->
         <dependency>
