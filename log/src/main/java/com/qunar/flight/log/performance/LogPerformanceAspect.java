@@ -6,8 +6,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.qunar.flight.log.LogService;
 import com.qunar.flight.log.filter.MethodFilter;
-import com.qunar.flight.qmonitor.QMonitor;
 import com.qunar.flight.log.filter.MethodFilterComparator;
+import com.qunar.flight.log.monitor.DMonitor;
 import com.qunar.flight.log.util.AnnotationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -81,7 +81,7 @@ public class LogPerformanceAspect {
 
     private void doLogAndMonitor(String name, long cost) {
         log.info(LogConstants.COST_FORMAT, name, cost);
-        QMonitor.recordOne(name, cost);
+        DMonitor.recordOne(name, cost);
     }
 
     private void preHandle(List<MethodFilter> filters, ProceedingJoinPoint point) {

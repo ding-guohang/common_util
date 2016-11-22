@@ -1,7 +1,6 @@
 package com.qunar.flight.log.util;
 
 import com.qunar.flight.log.LogService;
-import com.qunar.flight.qmonitor.QMonitor;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 import java.lang.annotation.Annotation;
@@ -37,7 +36,6 @@ public class AnnotationUtil {
             }
         } catch (Exception e) {
             log.error("find annotation fail", e);
-            QMonitor.recordOne("FIND_ANNOTATION_FAIL");
         }
         return annotation;
     }

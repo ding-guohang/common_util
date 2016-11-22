@@ -1,15 +1,15 @@
 package com.qunar.flight.log.util;
 
 import com.qunar.flight.log.strategies.ParamStrategy;
-import qunar.api.json.JsonMapper;
-import qunar.api.json.MapperBuilder;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import java.io.IOException;
 
 /**
  * Json序列化策略
  * <p>
  * 使用JsonFeature，Long型mask，每一位对应一个策略的使用
  *
- * @see qunar.api.json.JsonFeature
  * enable就是或，disable就是与非
  *
  * @author guohang.ding on 16-10-11
@@ -17,10 +17,15 @@ import qunar.api.json.MapperBuilder;
 public class SerializeStrategy implements ParamStrategy {
 
     /** default features */
-    private final JsonMapper MAPPER = MapperBuilder.getDefaultMapper();
+    private final ObjectMapper MAPPER = new ObjectMapper();
 
     private Object serialize(Object param) {
-        return MAPPER.writeValueAsString(param);
+        try {
+            return MAPPER.writeValueAsString(param);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return param;
+        }
     }
 
     @Override

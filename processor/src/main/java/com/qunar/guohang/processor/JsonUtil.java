@@ -18,6 +18,6 @@ public class JsonUtil {
         } catch (IOException e) {
             //ignore
         }
-        return null;
+        return o.toString();
     }
 }

@@ -10,7 +10,7 @@ import ch.qos.logback.classic.spi.LoggingEvent;
 /**
  * @author guohang.ding on 16-11-10
  */
-public class SimpleConverter extends LineOfCallerConverter {
+public class RealLineConverter extends LineOfCallerConverter {
 
     private static final String FQCN = com.qunar.flight.log.LogService.class.getName();
     private static final String FQCN_BY_UTIL = com.qunar.flight.log.LogUtil.class.getName();
