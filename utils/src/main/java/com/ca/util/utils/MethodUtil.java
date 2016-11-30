@@ -1,4 +1,4 @@
-package com.ca.log.util;
+package com.ca.util.utils;
 
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Method;

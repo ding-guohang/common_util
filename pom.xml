@@ -10,6 +10,7 @@
         <module>log</module>
         <module>processor</module>
         <module>log-over-logback</module>
+        <module>utils</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -58,6 +59,11 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.1</version>
             </dependency>
             <!-- aspectj -->
             <dependency>

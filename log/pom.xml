@@ -16,19 +16,11 @@
     </properties>
 
     <dependencies>
-        <!-- useful common -->
+        <!-- common utils -->
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <!-- log -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>com.ca.util</groupId>
+            <artifactId>utils</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <!-- json -->
         <dependency>
@@ -47,11 +39,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-        </dependency>
-        <!-- validation -->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
         </dependency>
     </dependencies>
 </project>
