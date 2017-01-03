@@ -1,14 +1,15 @@
 package com.ca.log.performance;
 
+import com.ca.log.Invoker;
+import com.ca.log.LogService;
+import com.ca.log.filter.FilterChain;
+import com.ca.log.filter.MethodFilter;
+import com.ca.log.monitor.DMonitor;
+import com.ca.log.util.AnnotationUtil;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.ca.log.LogService;
-import com.ca.log.filter.MethodFilter;
-import com.ca.log.filter.MethodFilterComparator;
-import com.ca.log.monitor.DMonitor;
-import com.ca.log.util.AnnotationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -35,10 +36,10 @@ public class LogPerformanceAspect {
     private static final LogService log = LogService.create(LogPerformanceAspect.class);
 
     @Resource
-    private List<MethodFilter> filters; // TODO SPI or @Resource ? All of these depend on Spring... -> SPI !
+    private List<MethodFilter> filters; // TODO SPI or @Resource ? All of these depend on Spring...
 
     @Around("@annotation(com.ca.log.performance.LogPerformance)")
-    public Object logPerformance(ProceedingJoinPoint point) throws Throwable {
+    public Object logPerformance(final ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
 
@@ -49,12 +50,17 @@ public class LogPerformanceAspect {
         }
 
         long start = System.currentTimeMillis();
-        List<MethodFilter> filterList = exclusion(filters, annotation);
-        preHandle(filterList, point);
+        Invoker<Object, ProceedingJoinPoint> invoker = new Invoker<Object, ProceedingJoinPoint>() {
+            @Override
+            public Object invoke(ProceedingJoinPoint o) throws Throwable {
+                return o.proceed();
+            }
+        };
 
-        Object ret = point.proceed();
+        FilterChain<Object> chain = FilterChain.init(filters, new Exclusion(annotation));
+        chain.buildFilterChain(invoker);
+        Object ret = invoker.invoke(point);
 
-        postHandle(filterList, point);
         logAndMonitor(annotation, start, method, point.getTarget().getClass().getSimpleName());
         return ret;
     }
@@ -84,49 +90,42 @@ public class LogPerformanceAspect {
         DMonitor.recordOne(name, cost);
     }
 
-    private void preHandle(List<MethodFilter> filters, ProceedingJoinPoint point) {
-        MethodFilterComparator.sort(filters);
-//        Can do it also by Ordering
-//        Collections.sort(filters, Ordering.<ComparableMethodFilter>natural().nullsFirst());
+    public static class Exclusion {
 
-        for (MethodFilter filter : filters) {
-            filter.preHandle(point);
-        }
-    }
+        private LogPerformance logPerformance;
 
-    private void postHandle(List<MethodFilter> filters, ProceedingJoinPoint point) {
-        // 倒序
-        for (int i = filters.size() - 1; i >= 0; i--) {
-            filters.get(i).postHandle(point);
-        }
-    }
-
-    private List<MethodFilter> exclusion(List<MethodFilter> filters, LogPerformance logPerformance) {
-        Class<? extends MethodFilter>[] exclusions = logPerformance.exclusion();
-        if (exclusions.length == 0) {
-            return filters;
+        @SuppressWarnings("all")
+        public Exclusion(LogPerformance logPerformance) {
+            this.logPerformance = logPerformance;
         }
 
-        /*
-        Map<Class<? extends MethodFilter>, MethodFilter> map = Maps.newHashMap();
-        for (MethodFilter filter : filters) {
-            map.put(filter.getClass(), filter);
-        }
-        for (Class c : exclusions) {
-            if (map.containsKey(c)) {
-                map.remove(c);
+        public List<MethodFilter> exclusion(List<MethodFilter> filters) {
+            Class<? extends MethodFilter>[] exclusions = logPerformance.exclusion();
+            if (exclusions.length == 0) {
+                return filters;
             }
-        }
 
-        return Lists.newArrayList(map.values());
-        */
-        // maybe 'Iterables.filter' is better? but i don't need to lazy it...
-        final Set<Class<? extends MethodFilter>> set = Sets.newHashSet(exclusions);
-        return Lists.newArrayList(Iterables.filter(filters, new Predicate<MethodFilter>() {
-            @Override
-            public boolean apply(MethodFilter methodFilter) {
-                return methodFilter != null && !set.contains(methodFilter.getClass());
+            /*
+            Map<Class<? extends MethodFilter>, MethodFilter> map = Maps.newHashMap();
+            for (MethodFilter filter : filters) {
+                map.put(filter.getClass(), filter);
             }
-        }));
+            for (Class c : exclusions) {
+                if (map.containsKey(c)) {
+                    map.remove(c);
+                }
+            }
+
+            return Lists.newArrayList(map.values());
+            */
+            // maybe 'Iterables.filter' is better? but i don't need to lazy it...
+            final Set<Class<? extends MethodFilter>> set = Sets.newHashSet(exclusions);
+            return Lists.newArrayList(Iterables.filter(filters, new Predicate<MethodFilter>() {
+                @Override
+                public boolean apply(MethodFilter methodFilter) {
+                    return methodFilter != null && !set.contains(methodFilter.getClass());
+                }
+            }));
+        }
     }
 }
