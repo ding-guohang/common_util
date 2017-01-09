@@ -67,6 +67,13 @@ public final class MethodFilterComparator {
                 return f2.getClass().getName().compareTo(f1.getClass().getName());
             }
 
+            /*
+            return ComparisonChain.start()
+                    .compare(f1.getOrder(), f2.getOrder())
+                    .compare(f2.getClass().getName(), f1.getClass().getName())
+                    .result();
+                    */
+
             // default is arbitrary positions
             return -1;
         }
