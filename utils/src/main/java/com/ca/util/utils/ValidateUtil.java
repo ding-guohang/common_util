@@ -29,12 +29,13 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  * @author guohang.ding on 16-11-8
  */
+@SuppressWarnings("unused")
 public class ValidateUtil {
 
     private static final ConstraintHelper helper = new ConstraintHelper();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateUtil.class);
     private static final String PARAMS_INVALID = "Params_Invalid";
-    public static final String SYSTEM_ERROR = "System_Error";
+    private static final String SYSTEM_ERROR = "System_Error";
 
     private static final ConcurrentHashMap<Class<? extends ConstraintValidator<? extends Annotation, ?>>,
             ConstraintValidator> cache = new ConcurrentHashMap<>();
@@ -45,7 +46,7 @@ public class ValidateUtil {
     }
 
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked"})
     public static void checkRequest(Object request) {
         checkArgument(request != null, PARAMS_INVALID);
         Stopwatch watch = Stopwatch.createStarted();
