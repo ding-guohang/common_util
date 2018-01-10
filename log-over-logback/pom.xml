@@ -17,7 +17,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.qunar.flight</groupId>
+            <groupId>com.ca.util</groupId>
             <artifactId>log</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
